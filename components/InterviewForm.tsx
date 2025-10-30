@@ -80,21 +80,21 @@ const InterviewForm = ({onSave} : { onSave : () => void}) => {
         } catch (error) {
             console.log(error);
         }
-        // try {
-        //     const response = await fetch("/api/generate", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({ type,role,  level , amount, resume, user}),
-        //     });
-        //     if (!response.ok) {
-        //         throw new Error("Failed to upload file");
-                  // toast.error("Failed to Create an Interview")
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-    // }
+        try {
+            const response = await fetch("/api/generate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ type,role,  level , amount, resume, user}),
+            });
+            if (!response.ok) {
+                throw new Error("Failed to upload file");
+                  toast.error("Failed to Create an Interview")
+            }
+        } catch (error) {
+            console.log(error);
+    }
     console.log(user)
         onSave();
         toast.success("Interview Created Successfully");
@@ -221,4 +221,5 @@ const InterviewForm = ({onSave} : { onSave : () => void}) => {
 }
 
 export default InterviewForm
+
 
