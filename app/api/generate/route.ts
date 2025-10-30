@@ -1,5 +1,6 @@
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
+import { revalidatePath } from "next/cache";
 
 import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
@@ -38,7 +39,7 @@ export async function POST(request: Request) {
     
     console.log(interview);
     await db.collection("interviews").add(interview);
-
+    revalidatePath("/"); 
     return Response.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
@@ -49,4 +50,5 @@ export async function POST(request: Request) {
 export async function GET() {
   return Response.json({ success: true, data: "Thank you!" }, { status: 200 });
 }
+
 
