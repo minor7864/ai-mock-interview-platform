@@ -37,7 +37,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
         "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
     });
     console.log(object);
-    const feedback = {
+    const feedback = await db.collection('feedback).add( {
       interviewId: interviewId,
       userId: userId,
       totalScore: object.totalScore,
@@ -46,19 +46,9 @@ export async function createFeedback(params: CreateFeedbackParams) {
       areasForImprovement: object.areasForImprovement,
       finalAssessment: object.finalAssessment,
       createdAt: new Date().toISOString(),
-    };
+    });
 
-    let feedbackRef;
-
-    if (feedbackId) {
-      feedbackRef = db.collection("feedback").doc(feedbackId);
-    } else {
-      feedbackRef = db.collection("feedback").doc();
-    }
-    console.log(feedbackRef);
-    await feedbackRef.set(feedback);
-
-    return { success: true, feedbackId: feedbackRef.id };
+    return { success: true, feedbackId: feedback.id };
   } catch (error) {
     console.error("Error saving feedback:", error);
     return { success: false };
@@ -122,4 +112,5 @@ export async function getInterviewsByUserId(
     ...doc.data(),
   })) as Interview[];
 }
+
 
