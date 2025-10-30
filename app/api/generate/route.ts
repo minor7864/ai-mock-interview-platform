@@ -24,7 +24,7 @@ export async function POST(request: Request) {
         Thank you! <3
     `,
     });
-
+    console.log(questions);
     const interview = {
       role: role,
       type: type,
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     };
     
-
+    console.log(interview);
     await db.collection("interviews").add(interview);
 
     return Response.json({ success: true }, { status: 200 });
@@ -49,3 +49,4 @@ export async function POST(request: Request) {
 export async function GET() {
   return Response.json({ success: true, data: "Thank you!" }, { status: 200 });
 }
+
