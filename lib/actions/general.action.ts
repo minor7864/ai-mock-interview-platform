@@ -17,6 +17,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
       )
       .join("");
 
+    console.log(formattedTranscript);
     const { object } = await generateObject({
       model: google("gemini-2.0-flash-001",),
       schema: feedbackSchema,
@@ -35,7 +36,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
       system:
         "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
     });
-
+    console.log(object);
     const feedback = {
       interviewId: interviewId,
       userId: userId,
@@ -54,7 +55,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
     } else {
       feedbackRef = db.collection("feedback").doc();
     }
-
+    console.log(feedbackRef);
     await feedbackRef.set(feedback);
 
     return { success: true, feedbackId: feedbackRef.id };
@@ -121,3 +122,4 @@ export async function getInterviewsByUserId(
     ...doc.data(),
   })) as Interview[];
 }
+
